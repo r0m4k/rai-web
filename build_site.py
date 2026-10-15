@@ -42,8 +42,12 @@ REDIRECT = """<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
 <body><p><a href="index.html#{a}">{t}</a></p></body></html>
 """
 
+# cache busting: browsers (Safari above all) keep site.css and site.js; a content hash in the URL forces a fresh copy
+import hashlib
+ver = lambda f: hashlib.sha1((HERE / f).read_bytes()).hexdigest()[:8]
+HEAD = HEAD.replace('href="site.css"', f'href="site.css?v={ver("site.css")}"')
 html = (HEAD.replace("{desc}", DESC) + '<main id="top">\n' + part("about") + part("docket") + part("writing")
-        + "</main>\n" + part("close") + '<script src="site.js"></script>\n</body>\n</html>\n')
+        + "</main>\n" + part("close") + f'<script src="site.js?v={ver("site.js")}"></script>\n</body>\n</html>\n')
 (HERE / "index.html").write_text(html)
 for f, t, a in (("events.html", "Events", "events"), ("blog.html", "Blog", "blog")):
     (HERE / f).write_text(REDIRECT.replace("{t}", t).replace("{a}", a))

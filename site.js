@@ -178,7 +178,12 @@ document.documentElement.classList.add("js");
     var g1=mix(A.g1,B.g1,t),g2=mix(A.g2,B.g2,t),ink=mix(A.ink,B.ink,t),al=lerp(A.a,B.a,t);
     root.style.setProperty("--g1","rgb("+g1+")");if(!DOC)root.style.backgroundColor="rgb("+g1+")";root.style.setProperty("--g2","rgb("+g2+")");
     field.ink="rgba("+ink+","+al.toFixed(3)+")";field.side=sideValue();
-    if(DOC&&tops.length){var gc=groundAt(scrollY+nav.offsetHeight);nav.style.background="linear-gradient(90deg,"+rgb(gc[0])+","+rgb(gc[1])+")";nav.style.backgroundColor="#000"}
+    /* touch screens: Safari fills the status bar with one solid colour taken from the header (and the page behind it).
+       The header starts as exactly that colour at its top edge and blends into the page's ground at its bottom edge,
+       so status bar, header and page read as one piece that follows the chapters as you scroll */
+    if(DOC&&tops.length){var gc=groundAt(scrollY+nav.offsetHeight),C=mix(gc[0],gc[1],.5);
+      nav.style.background="linear-gradient(180deg,"+rgb(C)+" 0%,rgba("+C+",0) 90%),linear-gradient(90deg,"+rgb(gc[0])+","+rgb(gc[1])+")";
+      nav.style.backgroundColor=rgb(C);root.style.backgroundColor=rgb(C)}
   }
 
   /* ================= animated ASCII field (canvas) ================= */

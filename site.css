@@ -465,8 +465,7 @@ body{background:var(--g1)}
 }
 
 /* touch screens: the stage is painted along the page (site.js, paintDoc) instead of fixed to the screen, so Safari
-   lets the page run under its floating toolbar; the status bar stays black (the header's colour under its gradient) */
-.doc-ground,.doc-ground body{background:#000}
+   lets the page run under its floating toolbar; the status bar takes the header's top colour (site.js, paint) */
+.doc-ground body{background:#000}
 .doc-ground .stage{position:absolute;inset:auto;top:0;left:0;right:0;height:100%;background:none;overflow:hidden}
 .doc-ground #ascii-field{display:none}
-.doc-ground .nav{background-color:#000}
