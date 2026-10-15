@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Responsible AI, Governance &amp; Policy · Speaker Series</title>
+<meta name="description" content="A public speaker series at Northeastern University on AI governance. Thursdays, 4:00–5:15 pm ET, ISEC 102, free and open to all.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Pixelify+Sans:wght@400..700&family=Nanum+Pen+Script&family=Archivo:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="site.css">
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+<div class="stage" id="stage" aria-hidden="true"><canvas id="ascii-field"></canvas></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs id="rnd-defs"></defs></svg>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="wordmark" href="#about" data-round aria-label="Responsible AI, Governance and Policy · back to top">RAI · Governance &amp; Policy</a>
+    <nav aria-label="Sections"><ul>
+      <li><a class="l" href="#about" data-to="about">About</a></li>
+      <li><a class="l" href="#events" data-to="events">Events</a></li>
+      <li><a class="l" href="#blog" data-to="blog">Blog</a></li>
+    </ul></nav>
+  </div>
+</header>
+<main id="top">
+<!-- ===== About ===== -->
+<section class="about chapter" id="about" data-chapter="0" aria-labelledby="h-about">
+  <div class="about-field reg">
+  <svg class="xh tl" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <svg class="xh tr" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <svg class="xh bl" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <svg class="xh br" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <div class="wrap grid">
+    <div>
+      <h1 id="h-about" class="vh">About the series</h1>
+      <p class="statement lead rise">A speaker series with a focus on AI governance that aims to make the rules for AI a public conversation.</p>
+      <div class="mission rise">
+        <p>Our mission is to open the questions that shape AI governance to everyone they affect, not only the people who write the rules.</p>
+        <p>Each semester we invite researchers, lawyers, policymakers and practitioners to present one clear argument about how AI should be built, audited and held to account, followed by open questions from the room.</p>
+        <p>We meet every other Thursday during the academic term, from 4:00 to 5:15 pm ET in ISEC 102 and online. Every session is free and open to students, staff and the public.</p>
+      </div>
+      <div class="body rise">
+        <p class="org">Organized by HCXAI Lab at Northeastern University</p>
+      </div>
+    </div>
+    <article class="nextcard rise" aria-labelledby="h-next" data-start="2026-10-29T16:00:00-04:00" data-title="Who gets to say no?" data-sub="Due process when algorithms decide">
+      <h2 id="h-next" class="nc-label" data-round>Next upcoming event</h2>
+      <div class="nc-body">
+        <figure class="ph"><img src="assets/speaker-1.webp" alt="Portrait of Dr. Anika Rao" style="object-position:44% 18%"></figure>
+        <div class="nc-text">
+          <div class="date nc-date"><div class="dd"><p class="dw" data-round>Thursday</p><p class="d" data-round>29 Oct</p></div><div class="dt"><p class="w"><time datetime="2026-10-29T16:00-04:00">4:00–5:15 pm ET</time></p><p class="loc">ISEC 102, Boston</p></div></div>
+          <h3 class="nc-title">Who gets to say no?</h3>
+          <p class="nc-who"><b>Dr. Anika Rao</b>Institute for Public-Interest Technology</p>
+        </div>
+        <div class="nc-cta"><a class="btn" href="https://example.org/rai-gp/register?talk=04">register</a></div>
+        <span class="count nc-count" id="count" data-round aria-live="polite"></span>
+      </div>
+    </article>
+  </div>
+  </div>
+</section>
+
+<!-- ===== Events: the docket ===== -->
+<section class="docket chapter" id="events" data-chapter="1" aria-labelledby="h-docket">
+  <div class="wrap">
+    <div class="dhead">
+      <div>
+        <h2 id="h-docket" class="pagetitle lines"><span class="line"><span data-line data-round>Events</span></span></h2>
+        <p class="rise">Every talk runs Thursday from 4:00 to 5:15 pm Eastern Time in ISEC 102, 805 Columbus Avenue, Boston, and is streamed online. Three talks are left this semester.</p>
+      </div>
+      <div class="filter rise" role="group" aria-label="Show talks">
+        <button type="button" id="f-up" data-f="up" aria-pressed="true">Upcoming</button>
+        <button type="button" id="f-heard" data-f="heard" aria-pressed="false">Past</button>
+        <button type="button" id="f-all" data-f="all" aria-pressed="false">All</button>
+      </div>
+    </div>
+
+    <ol class="cases" id="cases">
+      <!-- upcoming -->
+      <li class="case up" data-start="2026-10-29T16:00:00-04:00" data-title="Who gets to say no?" data-sub="Due process when algorithms decide">
+        <div class="date rise"><div class="dd"><p class="dw" data-round>Thursday</p><p class="d" data-round>29 Oct</p></div><div class="dt"><p class="w"><time datetime="2026-10-29T16:00-04:00">4:00–5:15 pm ET</time></p><p class="loc">ISEC 102</p></div></div>
+        <div class="rise">
+          <h3>Who gets to say no?</h3>
+          <p class="q">Due process when algorithms decide: what a real right to contest a machine’s decision would demand from regulators and builders.</p>
+          <div class="acts"><a class="btn" href="https://example.org/rai-gp/register?talk=04">register</a></div>
+        </div>
+        <div class="spk rise"><figure class="ph"><img src="assets/speaker-1.webp" alt="Dr. Anika Rao" style="object-position:44% 18%"></figure><p><b>Dr. Anika Rao</b><span>Institute for Public-Interest Technology</span></p></div>
+      </li>
+      <li class="case up" data-start="2026-11-12T16:00:00-05:00" data-title="Auditing the auditors" data-sub="Who certifies AI, and who keeps the audit honest">
+        <div class="date rise"><div class="dd"><p class="dw" data-round>Thursday</p><p class="d" data-round>12 Nov</p></div><div class="dt"><p class="w"><time datetime="2026-11-12T16:00-05:00">4:00–5:15 pm ET</time></p><p class="loc">ISEC 102</p></div></div>
+        <div class="rise">
+          <h3>Auditing the auditors</h3>
+          <p class="q">Third-party AI audits are becoming law. Who is qualified to certify a model, what can an audit actually see, and how does it stay independent?</p>
+          <div class="acts"><a class="btn" href="https://example.org/rai-gp/register?talk=05">register</a></div>
+        </div>
+        <div class="spk rise"><figure class="ph"><img loading="lazy" src="assets/speaker-2.webp" alt="Mei Lin Tran" style="object-position:50% 20%"></figure><p><b>Mei Lin Tran</b><span>Civic Data Lab</span></p></div>
+      </li>
+      <li class="case up" data-start="2026-12-10T16:00:00-05:00" data-title="Whose data is it?" data-sub="Community governance of the data that trains AI">
+        <div class="date rise"><div class="dd"><p class="dw" data-round>Thursday</p><p class="d" data-round>10 Dec</p></div><div class="dt"><p class="w"><time datetime="2026-12-10T16:00-05:00">4:00–5:15 pm ET</time></p><p class="loc">ISEC 102</p></div></div>
+        <div class="rise">
+          <h3>Whose data is it?</h3>
+          <p class="q">Training data is gathered from millions of people who never agreed to it. Community-led models for stewardship, from neighbourhood data trusts to collective licensing.</p>
+          <div class="acts"><a class="btn" href="https://example.org/rai-gp/register?talk=06">register</a></div>
+        </div>
+        <div class="spk rise"><figure class="ph"><img loading="lazy" src="assets/speaker-3.webp" alt="Dr. Marcus Ellery" style="object-position:50% 22%"></figure><p><b>Dr. Marcus Ellery</b><span>Center for Community Data Governance</span></p></div>
+      </li>
+      <!-- heard -->
+      <li class="case heard" hidden>
+        <div class="date rise"><div class="dd"><p class="dw" data-round>Thursday</p><p class="d" data-round>08 Oct</p></div><div class="dt"><p class="w"><time datetime="2026-10-08T16:00-04:00">4:00–5:15 pm ET</time></p><p class="loc">ISEC 102</p></div></div>
+        <div class="rise">
+          <h3>Counting the uncounted</h3>
+          <p class="q">Who goes missing when public agencies train systems on the records they happen to keep.</p>
+          <div class="acts"><a class="tlink" href="#post-counting">Read the recap</a></div>
+        </div>
+        <div class="spk rise"><p><b>Dr. Sofia Marín</b><span>School of Public Policy</span></p></div>
+      </li>
+      <li class="case heard" hidden>
+        <div class="date rise"><div class="dd"><p class="dw" data-round>Thursday</p><p class="d" data-round>24 Sep</p></div><div class="dt"><p class="w"><time datetime="2026-09-24T16:00-04:00">4:00–5:15 pm ET</time></p><p class="loc">ISEC 102</p></div></div>
+        <div class="rise">
+          <h3>A model card is not consent</h3>
+          <p class="q">Why documentation written for engineers cannot stand in for the permission of the people a system affects.</p>
+          <div class="acts"><a class="tlink" href="#post-modelcard">Read the recap</a></div>
+        </div>
+        <div class="spk rise"><p><b>Jordan Okafor</b><span>Law and Technology Clinic</span></p></div>
+      </li>
+      <li class="case heard" hidden>
+        <div class="date rise"><div class="dd"><p class="dw" data-round>Thursday</p><p class="d" data-round>10 Sep</p></div><div class="dt"><p class="w"><time datetime="2026-09-10T16:00-04:00">4:00–5:15 pm ET</time></p><p class="loc">ISEC 102</p></div></div>
+        <div class="rise">
+          <h3>Who writes the rules for AI?</h3>
+          <p class="q">The opening hearing: legislatures, standards bodies, companies and courts, and where the public fits among them.</p>
+          <div class="acts"><a class="tlink" href="#post-public">Read the editors’ note</a></div>
+        </div>
+        <div class="spk rise"><p><b>Prof. Helen Achterberg</b><span>Centre for Technology Governance</span></p></div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== Writing ===== -->
+<section class="writing chapter reg" id="blog" data-chapter="2" aria-labelledby="h-writing">
+  <svg class="xh tl" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <svg class="xh tr" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <div class="wrap">
+    <h2 id="h-writing" class="pagetitle lines"><span class="line"><span data-line data-round>Blog</span></span></h2>
+    <h3 class="subhead rise" id="h-latest" data-round>Latest</h3>
+    <article class="feature" id="post-preview">
+      <figure class="ph rise"><img loading="lazy" decoding="async" src="https://betterimagesofai.org/ImagesAI/alyssa-chen_ai-facial-recognition_2048x1850.png?nf_resize=fit&w=1200&q=80" alt="Illustrated face with geometric lines and measurement dots laid over it"></figure>
+      <div class="rise">
+        <h4>What a right to contest would require</h4>
+        <p class="meta" data-round style="margin-top:14px">14 Oct 2026 · before Talk 04 · 6 min read</p>
+        <p class="x">Ahead of Dr. Anika Rao’s talk, the series editors set out the questions a real appeal process for automated decisions has to answer: notice, reasons, a human who can change the outcome, and a deadline that means something.</p>
+        <p style="margin-top:28px"><a class="btn" href="#post-preview">read the post</a></p>
+      </div>
+    </article>
+    <h3 class="subhead rise" id="h-archive" data-round>Archive</h3>
+    <ul class="posts" aria-labelledby="h-archive">
+      <li><a class="post rise" id="post-counting" href="#post-counting">
+        <p class="meta" data-round>13 Oct 2026 · Recap</p>
+        <div><h4>Counting the uncounted</h4><p>Dr. Sofia Marín on the people public datasets leave out, and why a fairer model cannot fix a register that never recorded them.</p></div>
+        <figure class="ph rise"><img loading="lazy" decoding="async" src="https://betterimagesofai.org/ImagesAI/marcin-wilkowski_community-activism_3150x1772.png?nf_resize=fit&w=600&q=80" alt="Sketch of a man overlaid with small framed portraits of individual people"></figure>
+      </a></li>
+      <li><a class="post rise" id="post-modelcard" href="#post-modelcard">
+        <p class="meta" data-round>29 Sep 2026 · Recap</p>
+        <div><h4>A model card is not consent</h4><p>Jordan Okafor argued that disclosure written for engineers cannot carry the weight of permission. The room pushed back on what consent at scale could look like.</p></div>
+        <figure class="ph rise"><img loading="lazy" decoding="async" src="https://betterimagesofai.org/ImagesAI/jenny-kidd_synthetic-pasts_algorithmic-memories_3750x2210.png?nf_resize=fit&w=600&q=80" alt="A wall of photographs with one picture highlighted by pointers"></figure>
+      </a></li>
+      <li><a class="post rise" id="post-public" href="#post-public">
+        <p class="meta" data-round>04 Sep 2026 · Editors’ note</p>
+        <div><h4>Why this series meets in public</h4><p>The rules for AI are being written now, mostly in rooms the public never sees. We wanted one room in Boston where they are argued out loud.</p></div>
+        <figure class="ph rise"><img loading="lazy" decoding="async" src="https://betterimagesofai.org/ImagesAI/marcin-wilkowski_datafied-relations_3300x1856.png?nf_resize=fit&w=600&q=80" alt="Hand-drawn figures in conversation, overlaid with data graphics"></figure>
+      </a></li>
+    </ul>
+  </div>
+</section>
+</main>
+<!-- ===== Close ===== -->
+<footer class="close reg">
+  <svg class="xh tl" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <svg class="xh tr" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <svg class="xh bl" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <svg class="xh br" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+  <div class="wrap">
+    <div class="row" style="margin-top:0">
+      <div><b data-round>Find us</b><p>ISEC 102, 805 Columbus Avenue<br>Northeastern University, Boston</p></div>
+      <div><b data-round>Write to the series</b><p>rai-series@example.org</p></div>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
