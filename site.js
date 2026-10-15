@@ -145,6 +145,10 @@ document.documentElement.classList.add("js");
     {g1:[94,6,20],   g2:[42,3,9],   ink:[201,209,218], a:.42, side:0},
     {g1:[11,11,11],  g2:[11,11,11], ink:[200,16,46],   a:.85, side:1}
   ];
+  /* touch screens (phones, tablets): Safari keeps a solid bar under its toolbar whenever a fixed layer reaches the
+     bottom edge, so there the ground and the field are painted once along the whole page and scroll with it */
+  var DOC=matchMedia("(pointer:coarse)").matches;
+  if(DOC)document.documentElement.classList.add("doc-ground");
   var stage=document.getElementById("stage"),nav=document.getElementById("nav"),root=document.documentElement;
   var chapters=[].slice.call(document.querySelectorAll(".chapter"));
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -154,15 +158,17 @@ document.documentElement.classList.add("js");
   var tops=[],cur={v:0};
   function measure(){tops=chapters.map(function(c){return c.getBoundingClientRect().top+scrollY})}
   /* v runs 0 → 2 continuously; each change happens over the 70vh around a chapter boundary */
-  function chapterValue(){
-    var p=scrollY+innerHeight*.55,W=innerHeight*.35,v=0;
+  function valueAt(p,vh){
+    var W=vh*.35,v=0;
     for(var i=1;i<tops.length;i++){var t=(p-(tops[i]-W))/(2*W);v+=ease(Math.max(0,Math.min(1,t)))}
     return v;
   }
+  function chapterValue(){return valueAt(scrollY+innerHeight*.55,innerHeight)}
   /* the dense side travels continuously from chapter centre to chapter centre: right → left → right */
   var SIDES=[1,0,1];
-  function sideValue(){
-    var mid=scrollY+innerHeight*.5,c=chapters.map(function(el,i){return tops[i]+el.offsetHeight/2});
+  function sideValue(){return sideAt(scrollY+innerHeight*.5)}
+  function sideAt(mid){
+    var c=chapters.map(function(el,i){return tops[i]+el.offsetHeight/2});
     if(mid<=c[0])return SIDES[0];
     for(var i=0;i<c.length-1;i++)if(mid<c[i+1]){var t=(mid-c[i])/(c[i+1]-c[i]);t=t*t*(3-2*t);return lerp(SIDES[i],SIDES[i+1],t)}
     return SIDES[SIDES.length-1];
@@ -170,8 +176,9 @@ document.documentElement.classList.add("js");
   function paint(v){
     var i=Math.min(STOPS.length-2,Math.floor(v)),t=v-i,A=STOPS[i],B=STOPS[i+1];
     var g1=mix(A.g1,B.g1,t),g2=mix(A.g2,B.g2,t),ink=mix(A.ink,B.ink,t),al=lerp(A.a,B.a,t);
-    root.style.setProperty("--g1","rgb("+g1+")");root.style.backgroundColor="rgb("+g1+")";root.style.setProperty("--g2","rgb("+g2+")");
+    root.style.setProperty("--g1","rgb("+g1+")");if(!DOC)root.style.backgroundColor="rgb("+g1+")";root.style.setProperty("--g2","rgb("+g2+")");
     field.ink="rgba("+ink+","+al.toFixed(3)+")";field.side=sideValue();
+    if(DOC&&tops.length){var gc=groundAt(scrollY+nav.offsetHeight);nav.style.background="linear-gradient(90deg,"+rgb(gc[0])+","+rgb(gc[1])+")";nav.style.backgroundColor="#000"}
   }
 
   /* ================= animated ASCII field (canvas) ================= */
@@ -204,13 +211,50 @@ document.documentElement.classList.add("js");
   function onScroll(){
     if(ticking)return;ticking=true;
     requestAnimationFrame(function(){
-      cur.v=chapterValue();paint(cur.v);draw();markNav();ticking=false;
+      cur.v=chapterValue();paint(cur.v);if(!DOC)draw();markNav();ticking=false;
     });
   }
   var settle;
-  function setup(){size();measure();cur.v=chapterValue();paint(cur.v);draw()}
-  function relayout(){root.style.setProperty("--nav-h",nav.offsetHeight+"px");measure();onScroll()}
-  setup();if(document.fonts){document.fonts.ready.then(setup);if(document.fonts.load)document.fonts.load('500 11px "IBM Plex Mono"').then(setup)}
+  /* the page-long version of the stage: tiles of canvas stacked down the page. Each row takes the chapter blend and the
+     dense side at its own position, so scrolling shows the same right → left → right travel and colour change */
+  var tiles=[],docKey="",VH=0;
+  function rgb(c){return "rgb("+c+")"}
+  function at(Y){var v=valueAt(Y,VH||innerHeight),i=Math.min(STOPS.length-2,Math.floor(v)),t=v-i;return [STOPS[i],STOPS[i+1],t]}
+  /* left and right colour of the ground at page position Y: g1 → g2 across the width, leaning like the 135° ground.
+     The lean is a triangle wave over two screen heights, so it never jumps where one chapter meets the next */
+  function groundAt(Y){var m=at(Y),g1=mix(m[0].g1,m[1].g1,m[2]),g2=mix(m[0].g2,m[1].g2,m[2]),q=(Y/(VH||innerHeight))%2,f=q<1?q:2-q;
+    return [mix(g1,g2,.35*f),mix(g1,g2,.65+.35*f)]}
+  function paintDoc(force){
+    measure();
+    var W=innerWidth,H=document.documentElement.scrollHeight;
+    if(!VH||W+"" !== docKey.split("x")[0])VH=Math.max(innerHeight,document.documentElement.clientHeight);
+    var key=W+"x"+H+"x"+tops.join(",");if(!force&&key===docKey)return;docKey=key;
+    var d=Math.min(2,devicePixelRatio||1),T=1024,n=Math.ceil(H/T),FONT='500 11px "IBM Plex Mono", monospace';
+    stage.style.height=H+"px";
+    while(tiles.length<n){var c=document.createElement("canvas");c.className="tile";stage.appendChild(c);tiles.push(c)}
+    while(tiles.length>n)stage.removeChild(tiles.pop());
+    var cap=W<760?.6:.95;
+    tiles.forEach(function(c,k){
+      var top=k*T,h=Math.min(T,H-top),g;
+      c.width=Math.round(W*d);c.height=Math.round(h*d);
+      c.style.cssText="position:absolute;left:0;top:"+top+"px;width:"+W+"px;height:"+h+"px;display:block";
+      g=c.getContext("2d");g.setTransform(d,0,0,d,0,0);
+      /* ground: g1 → g2 across the width, leaning with the position in the chapter (the 135° ground, laid along the page) */
+      for(var y=0;y<h;y+=4){var gc=groundAt(top+y),lg=g.createLinearGradient(0,0,W,0);
+        lg.addColorStop(0,rgb(gc[0]));lg.addColorStop(1,rgb(gc[1]));g.fillStyle=lg;g.fillRect(0,y,W,4.5)}
+      /* field: the website formula, row by row */
+      g.font=FONT;g.textBaseline="top";var cw=g.measureText("M").width||6.6,cols=Math.ceil(W/cw)+1;
+      for(var r=Math.floor(top/CH);r<Math.ceil((top+h)/CH);r++){
+        var Yr=r*CH+CH/2,mm=at(Yr),ink=mix(mm[0].ink,mm[1].ink,mm[2]),al=lerp(mm[0].a,mm[1].a,mm[2]),sd=sideAt(Yr),row="";
+        for(var x=0;x<cols;x++){var u=x/(cols-1),pp=sd*u+(1-sd)*(1-u);row+=ch(Math.min(cap,Math.pow(pp,1.9)*1.2-.08+(hash(x*1.7,r*1.3)-.5)*.5))}
+        g.fillStyle="rgba("+ink+","+al.toFixed(3)+")";g.fillText(row,0,r*CH-top)}
+    });
+  }
+  /* force: repaint the page-long ground even if nothing moved (first paint, fonts, load); resizes from the iPhone toolbar
+     collapsing change neither the width nor the page height, so they reuse the painted tiles */
+  function setup(force){size();measure();cur.v=chapterValue();paint(cur.v);if(DOC)paintDoc(!!force);else draw()}
+  function relayout(){root.style.setProperty("--nav-h",nav.offsetHeight+"px");measure();if(DOC)paintDoc();onScroll()}
+  setup(true);if(document.fonts){document.fonts.ready.then(setup);if(document.fonts.load)document.fonts.load('500 11px "IBM Plex Mono"').then(setup)}
   addEventListener("load",function(){setup();relayout()});
   /* late images, fonts or the filter change the page height: keep chapter tops current */
   if("ResizeObserver" in window)new ResizeObserver(function(){relayout()}).observe(document.querySelector("main"));
