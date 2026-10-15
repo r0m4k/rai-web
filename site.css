@@ -432,14 +432,28 @@ html{background:var(--g1)}
    Safari tints its bars from solid background colours, never from gradients */
 body{background:var(--g1)}
 .nav{background-color:var(--g1);padding-top:env(safe-area-inset-top)}
-.stage{background-color:var(--g2)}
 .nav .wrap{padding-left:max(var(--m),env(safe-area-inset-left));padding-right:max(var(--m),env(safe-area-inset-right))}
 /* the footer clears the home indicator and the floating toolbar */
 .close{padding-bottom:calc(40px + env(safe-area-inset-bottom))}
 .close>.xh.bl,.close>.xh.br{bottom:calc(16px + env(safe-area-inset-bottom))}
 
 /* Blog boxes: a 4% white tint vanished on phone screens; the boxes now also dim the field, like the talk panels */
-.writing .post,.writing .feature{background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),rgba(11,11,11,.55)}
+.writing .post{background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),rgba(11,11,11,.55)}
 .writing .post:hover{background:linear-gradient(rgba(255,255,255,.09),rgba(255,255,255,.09)),rgba(11,11,11,.55)}
-/* the latest post sits in a box too */
-.writing .feature{padding:clamp(22px,2.4vw,32px)}
+
+/* phones: Safari paints the status bar in the header's solid colour, so the header is that colour, and the ground
+   runs top to bottom from it, so the header meets the page without a seam (desktop keeps the 135° ground) */
+@media (max-width:900px){
+  .nav{background:var(--g1)}
+  .stage{background:linear-gradient(180deg,var(--g1) 0%,var(--g2) 100%)}
+}
+/* archive rows keep the desktop arrangement on phones: meta and text on the left, a small image on the right */
+@media (max-width:900px){
+  .post{grid-template-columns:minmax(0,1fr) 110px;grid-template-rows:auto 1fr;align-items:start;gap:10px 20px}
+  .post .meta{grid-column:1;grid-row:1;order:0}
+  .post>div{grid-column:1;grid-row:2;order:0}
+  .post .ph{grid-column:2;grid-row:1/span 2;order:0;max-width:none;align-self:start}
+}
+@media (max-width:520px){
+  .post{grid-template-columns:minmax(0,1fr) 84px;gap:8px 14px;padding:18px}
+}
