@@ -469,3 +469,26 @@ body{background:var(--g1)}
 .doc-ground body{background:#000}
 .doc-ground .stage{position:absolute;inset:auto;top:0;left:0;right:0;height:100%;background:none;overflow:hidden}
 .doc-ground #ascii-field{display:none}
+
+/* ================= whole boxes are links ================= */
+/* each talk, the next-event card and the latest post carry one link, on the title, stretched over the whole box */
+.case,.nextcard,.writing .feature{position:relative}
+.cover{color:inherit;text-decoration:none}
+.cover::after{content:"";position:absolute;inset:0;z-index:3}
+.cover:focus-visible{outline:none}
+.cover:focus-visible::after{outline:2px solid var(--white);outline-offset:4px}
+@media (hover:hover){
+  .case,.nextcard,.writing .feature{transition:background-color .18s ease}
+  .case:has(.cover:hover),.nextcard:has(.cover:hover){background:rgba(11,11,11,.58)}
+  .writing .feature:has(.cover:hover){background:linear-gradient(rgba(255,255,255,.09),rgba(255,255,255,.09)),rgba(11,11,11,.55)}
+  .cover:hover{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:.12em}
+}
+.case h3+.q{margin-top:10px}
+
+/* next upcoming event: an even square; the photo runs the full height beside the date box, title and speaker */
+.nextcard{aspect-ratio:1/1;grid-template-rows:auto minmax(0,1fr);gap:22px}
+.nextcard .nc-body{grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:0 26px;height:100%}
+.nextcard .nc-body .ph{height:100%;min-height:0;grid-row:1}
+.nextcard .nc-text{display:flex;flex-direction:column;height:100%}
+.nextcard .nc-title{margin-top:auto;padding-top:22px;font-size:clamp(26px,2.4vw,34px)}
+.nextcard .nc-who{margin-top:14px}

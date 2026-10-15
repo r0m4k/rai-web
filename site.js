@@ -68,10 +68,10 @@ document.documentElement.classList.add("js");
     if(!card)return;var q=function(r,s){return r.querySelector(s)};
     var box=q(card,".date"),src=q(c,".date");box.innerHTML=src.innerHTML;
     var loc=q(box,".loc");if(loc)loc.textContent=loc.textContent+", Boston";
-    q(card,".nc-title").textContent=q(c,"h3").textContent;
+    var link=q(card,".nc-title .cover");link.textContent=q(c,"h3").textContent;link.href=q(c,".cover").href;
     var img=q(card,".ph img"),cimg=q(c,".spk img");if(cimg){img.src=cimg.src;img.alt="Portrait of "+cimg.alt;img.style.objectPosition=cimg.style.objectPosition}
     var who=q(card,".nc-who"),nm=q(c,".spk b"),af=q(c,".spk span");who.innerHTML="";var b=document.createElement("b");b.textContent=nm.textContent;who.appendChild(b);who.appendChild(document.createTextNode(af.textContent));
-    q(card,".btn").href=q(c,".btn").href;card.dataset.start=c.dataset.start;shown=c.dataset.start;round();
+    card.dataset.start=c.dataset.start;shown=c.dataset.start;round();
   }
   /* the countdown spells its number: Pixelify's 5 reads as an S, and words never show one */
   var ONES="zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" "),
@@ -81,7 +81,7 @@ document.documentElement.classList.add("js");
   var tickTimer;
   function tick(){
     clearTimeout(tickTimer);
-    var el=document.getElementById("count");if(!el)return;
+    var el=document.getElementById("count")||{};
     var now=Date.now(),all=talks(),next=all.filter(function(x){return x.t+LEN>now})[0];
     if(!next){var last=all[all.length-1];if(last&&last.el.dataset.start!==shown)fillCard(last.el);el.textContent="This semester’s talks are complete";return}
     if(next.el.dataset.start!==shown)fillCard(next.el);
