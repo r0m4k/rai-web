@@ -441,7 +441,6 @@ body{background:var(--g1)}
 /* Blog boxes: a 4% white tint vanished on phone screens; the boxes now also dim the field, like the talk panels */
 .writing .post,.writing .feature{background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),rgba(11,11,11,.55)}
 .writing .feature{padding:clamp(22px,2.4vw,32px)}
-.writing .post:hover{background:linear-gradient(rgba(255,255,255,.09),rgba(255,255,255,.09)),rgba(11,11,11,.55)}
 
 /* archive rows keep the desktop arrangement on phones: meta and text on the left, a small image on the right */
 @media (max-width:900px){
@@ -477,11 +476,14 @@ body{background:var(--g1)}
 .cover::after{content:"";position:absolute;inset:0;z-index:3}
 .cover:focus-visible{outline:none}
 .cover:focus-visible::after{outline:2px solid var(--white);outline-offset:4px}
+/* hover: a slow, slight deepening of the box and an underline that fades in; nothing jumps */
+.case,.nextcard,.writing .feature,.writing .post{transition:background-color .45s cubic-bezier(.22,1,.36,1),background-image .45s cubic-bezier(.22,1,.36,1)}
+.cover,.post h4{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.14em;text-decoration-color:transparent;
+  transition:text-decoration-color .45s cubic-bezier(.22,1,.36,1)}
 @media (hover:hover){
-  .case,.nextcard,.writing .feature{transition:background-color .18s ease}
-  .case:has(.cover:hover),.nextcard:has(.cover:hover){background:rgba(11,11,11,.58)}
-  .writing .feature:has(.cover:hover){background:linear-gradient(rgba(255,255,255,.09),rgba(255,255,255,.09)),rgba(11,11,11,.55)}
-  .cover:hover{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:.12em}
+  .case:has(.cover:hover),.nextcard:has(.cover:hover){background-color:rgba(11,11,11,.5)}
+  .writing .feature:has(.cover:hover),.writing .post:hover{background:linear-gradient(rgba(255,255,255,.07),rgba(255,255,255,.07)),rgba(11,11,11,.55)}
+  .cover:hover,.post:hover h4{text-decoration-color:rgba(255,255,255,.6)}
 }
 .case h3+.q{margin-top:10px}
 
@@ -492,3 +494,12 @@ body{background:var(--g1)}
 .nextcard .nc-text{display:flex;flex-direction:column;height:100%}
 .nextcard .nc-title{margin-top:auto;padding-top:22px;font-size:clamp(26px,2.4vw,34px)}
 .nextcard .nc-who{margin-top:14px}
+/* blog boxes: the light tint is an inset shadow over a solid colour, so it fades instead of jumping */
+.writing .post,.writing .feature,.writing .post:hover,.writing .feature:hover{background:rgba(11,11,11,.55);box-shadow:inset 0 0 0 100vmax rgba(255,255,255,.05);
+  transition:box-shadow .45s cubic-bezier(.22,1,.36,1)}
+@media (hover:hover){.writing .feature:has(.cover:hover),.writing .post:hover{box-shadow:inset 0 0 0 100vmax rgba(255,255,255,.075)}}
+/* boxes that also fade in on scroll keep both transitions (the entrance rule would otherwise replace the hover one) */
+@media (prefers-reduced-motion:no-preference){
+  .js .case.rise,.js .nextcard.rise{transition:opacity .7s var(--ease-out),transform .7s var(--ease-out),background-color .45s var(--ease-out)}
+  .js .writing .feature.rise{transition:opacity .7s var(--ease-out),transform .7s var(--ease-out),box-shadow .45s var(--ease-out)}
+}
