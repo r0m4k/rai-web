@@ -145,7 +145,7 @@ document.documentElement.classList.add("js");
     {g1:[94,6,20],   g2:[42,3,9],   ink:[201,209,218], a:.42, side:0},
     {g1:[11,11,11],  g2:[11,11,11], ink:[200,16,46],   a:.85, side:1}
   ];
-  var theme=document.querySelector('meta[name="theme-color"]'),stage=document.getElementById("stage"),nav=document.getElementById("nav"),root=document.documentElement;
+  var stage=document.getElementById("stage"),nav=document.getElementById("nav"),root=document.documentElement;
   var chapters=[].slice.call(document.querySelectorAll(".chapter"));
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   function lerp(a,b,t){return a+(b-a)*t}
@@ -170,8 +170,7 @@ document.documentElement.classList.add("js");
   function paint(v){
     var i=Math.min(STOPS.length-2,Math.floor(v)),t=v-i,A=STOPS[i],B=STOPS[i+1];
     var g1=mix(A.g1,B.g1,t),g2=mix(A.g2,B.g2,t),ink=mix(A.ink,B.ink,t),al=lerp(A.a,B.a,t);
-    root.style.setProperty("--g1","rgb("+g1+")");root.style.backgroundColor="rgb("+g1+")";
-    var tc="rgb("+g1+")";if(theme&&theme.content!==tc)theme.content=tc;root.style.setProperty("--g2","rgb("+g2+")");
+    root.style.setProperty("--g1","rgb("+g1+")");root.style.backgroundColor="rgb("+g1+")";root.style.setProperty("--g2","rgb("+g2+")");
     field.ink="rgba("+ink+","+al.toFixed(3)+")";field.side=sideValue();
   }
 
@@ -220,6 +219,8 @@ document.documentElement.classList.add("js");
 
   /* ================= nav: current chapter, smooth jump that respects the fixed header ================= */
   var links=[].slice.call(document.querySelectorAll(".nav a.l"));
+  /* a tapped link keeps focus on phones; let go of it so only the current chapter stays underlined */
+  links.forEach(function(a){a.addEventListener("click",function(){setTimeout(function(){a.blur()},0)})});
   root.style.setProperty("--nav-h",nav.offsetHeight+"px");
   /* current section = the last chapter whose top has passed 40% of the viewport */
   function markNav(){var mid=scrollY+innerHeight*.4,id=chapters[0].id;

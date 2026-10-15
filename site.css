@@ -428,25 +428,21 @@ html{background:var(--g1)}
 .case .date .d{white-space:nowrap}
 
 /* ================= iPhone and other notched phones ================= */
-/* the page runs under the status bar and the toolbar (viewport-fit=cover), and both take the current ground:
-   Safari tints its bars from solid background colours, never from gradients */
+/* the page runs under the toolbar (viewport-fit=cover), so the site shows beneath Safari's floating buttons;
+   the status bar stays a plain black strip above the header, which keeps its gradient */
 body{background:var(--g1)}
-.nav{background-color:var(--g1);padding-top:env(safe-area-inset-top)}
+.nav{padding-top:env(safe-area-inset-top)}
+.nav::after{content:"";position:absolute;left:0;right:0;top:0;height:env(safe-area-inset-top);background:#000}
 .nav .wrap{padding-left:max(var(--m),env(safe-area-inset-left));padding-right:max(var(--m),env(safe-area-inset-right))}
 /* the footer clears the home indicator and the floating toolbar */
 .close{padding-bottom:calc(40px + env(safe-area-inset-bottom))}
 .close>.xh.bl,.close>.xh.br{bottom:calc(16px + env(safe-area-inset-bottom))}
 
 /* Blog boxes: a 4% white tint vanished on phone screens; the boxes now also dim the field, like the talk panels */
-.writing .post{background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),rgba(11,11,11,.55)}
+.writing .post,.writing .feature{background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),rgba(11,11,11,.55)}
+.writing .feature{padding:clamp(22px,2.4vw,32px)}
 .writing .post:hover{background:linear-gradient(rgba(255,255,255,.09),rgba(255,255,255,.09)),rgba(11,11,11,.55)}
 
-/* phones: Safari paints the status bar in the header's solid colour, so the header is that colour, and the ground
-   runs top to bottom from it, so the header meets the page without a seam (desktop keeps the 135° ground) */
-@media (max-width:900px){
-  .nav{background:var(--g1)}
-  .stage{background:linear-gradient(180deg,var(--g1) 0%,var(--g2) 100%)}
-}
 /* archive rows keep the desktop arrangement on phones: meta and text on the left, a small image on the right */
 @media (max-width:900px){
   .post{grid-template-columns:minmax(0,1fr) 110px;grid-template-rows:auto 1fr;align-items:start;gap:10px 20px}
@@ -456,4 +452,14 @@ body{background:var(--g1)}
 }
 @media (max-width:520px){
   .post{grid-template-columns:minmax(0,1fr) 84px;gap:8px 14px;padding:18px}
+}
+
+/* touch screens keep a tapped element in :hover until the next tap, which left a header link underlined after
+   scrolling away; on devices without a real pointer, hover styles fall back to the resting state */
+@media (hover:none){
+  .nav a.l:hover:not([aria-current])::after{transform:scaleX(0)}
+  .filter button:hover:not([aria-pressed="true"]){color:var(--ink-2)}
+  .writing .post:hover{background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),rgba(11,11,11,.55)}
+  .btn:hover{transform:rotate(-2deg);box-shadow:5px 5px 0 var(--chrome)}
+  .tlink:hover{color:inherit}
 }
