@@ -426,3 +426,20 @@ html{background:var(--g1)}
 /* "29 Oct" is 165px at 52px: 16px side padding gives the day 168px, on one line */
 .case .date{padding-inline:16px}
 .case .date .d{white-space:nowrap}
+
+/* ================= iPhone and other notched phones ================= */
+/* the page runs under the status bar and the toolbar (viewport-fit=cover), and both take the current ground:
+   Safari tints its bars from solid background colours, never from gradients */
+body{background:var(--g1)}
+.nav{background-color:var(--g1);padding-top:env(safe-area-inset-top)}
+.stage{background-color:var(--g2)}
+.nav .wrap{padding-left:max(var(--m),env(safe-area-inset-left));padding-right:max(var(--m),env(safe-area-inset-right))}
+/* the footer clears the home indicator and the floating toolbar */
+.close{padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+.close>.xh.bl,.close>.xh.br{bottom:calc(16px + env(safe-area-inset-bottom))}
+
+/* Blog boxes: a 4% white tint vanished on phone screens; the boxes now also dim the field, like the talk panels */
+.writing .post,.writing .feature{background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),rgba(11,11,11,.55)}
+.writing .post:hover{background:linear-gradient(rgba(255,255,255,.09),rgba(255,255,255,.09)),rgba(11,11,11,.55)}
+/* the latest post sits in a box too */
+.writing .feature{padding:clamp(22px,2.4vw,32px)}
