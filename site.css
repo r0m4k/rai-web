@@ -467,7 +467,8 @@ body{background:var(--g1)}
    lets the page run under its floating toolbar; the status bar takes the header's top colour (site.js, paint) */
 .doc-ground body{background:#000}
 .doc-ground .stage{position:absolute;inset:auto;top:0;left:0;right:0;height:100%;background:none;overflow:hidden}
-.doc-ground #ascii-field{display:none}
+/* the ASCII field stays live on touch screens too: a screen-sized canvas that redraws on scroll, as on desktop */
+.doc-ground #ascii-field{position:fixed;top:0;left:0;z-index:1;display:block;pointer-events:none}
 
 /* ================= whole boxes are links ================= */
 /* each talk, the next-event card and the latest post carry one link, on the title, stretched over the whole box */

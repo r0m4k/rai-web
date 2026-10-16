@@ -187,7 +187,10 @@ document.documentElement.classList.add("js");
   }
 
   /* ================= animated ASCII field (canvas) ================= */
-  var cv=document.getElementById("ascii-field"),ctx=cv.getContext("2d"),field={ink:"rgba(255,255,255,.34)",side:1};
+  var cv=document.getElementById("ascii-field");
+  /* touch screens: the live field sits directly in <body>, outside the page-long ground (Safari clips it there) */
+  if(DOC)document.body.insertBefore(cv,document.body.firstChild);
+  var ctx=cv.getContext("2d"),field={ink:"rgba(255,255,255,.34)",side:1};
   var CW=6.6,CH=11,cols=0,rows=0,dpr=1,vel=0,lastY=scrollY;
   function hash(x,y){var h=Math.sin(x*127.1+y*311.7)*43758.5453;return h-Math.floor(h)}
   function noise(x,y){var xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),w=yf*yf*(3-2*yf);
@@ -216,7 +219,7 @@ document.documentElement.classList.add("js");
   function onScroll(){
     if(ticking)return;ticking=true;
     requestAnimationFrame(function(){
-      cur.v=chapterValue();paint(cur.v);if(!DOC)draw();markNav();ticking=false;
+      cur.v=chapterValue();paint(cur.v);draw();markNav();ticking=false;
     });
   }
   var settle;
@@ -238,7 +241,6 @@ document.documentElement.classList.add("js");
     stage.style.height=H+"px";
     while(tiles.length<n){var c=document.createElement("canvas");c.className="tile";stage.appendChild(c);tiles.push(c)}
     while(tiles.length>n)stage.removeChild(tiles.pop());
-    var cap=W<760?.6:.95;
     tiles.forEach(function(c,k){
       var top=k*T,h=Math.min(T,H-top),g;
       c.width=Math.round(W*d);c.height=Math.round(h*d);
@@ -247,17 +249,11 @@ document.documentElement.classList.add("js");
       /* ground: g1 → g2 across the width, leaning with the position in the chapter (the 135° ground, laid along the page) */
       for(var y=0;y<h;y+=4){var gc=groundAt(top+y),lg=g.createLinearGradient(0,0,W,0);
         lg.addColorStop(0,rgb(gc[0]));lg.addColorStop(1,rgb(gc[1]));g.fillStyle=lg;g.fillRect(0,y,W,4.5)}
-      /* field: the website formula, row by row */
-      g.font=FONT;g.textBaseline="top";var cw=g.measureText("M").width||6.6,cols=Math.ceil(W/cw)+1;
-      for(var r=Math.floor(top/CH);r<Math.ceil((top+h)/CH);r++){
-        var Yr=r*CH+CH/2,mm=at(Yr),ink=mix(mm[0].ink,mm[1].ink,mm[2]),al=lerp(mm[0].a,mm[1].a,mm[2]),sd=sideAt(Yr),row="";
-        for(var x=0;x<cols;x++){var u=x/(cols-1),pp=sd*u+(1-sd)*(1-u);row+=ch(Math.min(cap,Math.pow(pp,1.9)*1.2-.08+(hash(x*1.7,r*1.3)-.5)*.5))}
-        g.fillStyle="rgba("+ink+","+al.toFixed(3)+")";g.fillText(row,0,r*CH-top)}
     });
   }
   /* force: repaint the page-long ground even if nothing moved (first paint, fonts, load); resizes from the iPhone toolbar
      collapsing change neither the width nor the page height, so they reuse the painted tiles */
-  function setup(force){size();measure();cur.v=chapterValue();paint(cur.v);if(DOC)paintDoc(!!force);else draw()}
+  function setup(force){size();measure();cur.v=chapterValue();paint(cur.v);if(DOC)paintDoc(!!force);draw()}
   function relayout(){root.style.setProperty("--nav-h",nav.offsetHeight+"px");measure();if(DOC)paintDoc();onScroll()}
   setup(true);if(document.fonts){document.fonts.ready.then(setup);if(document.fonts.load)document.fonts.load('500 11px "IBM Plex Mono"').then(setup)}
   addEventListener("load",function(){setup();relayout()});
