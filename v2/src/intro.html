@@ -1,0 +1,28 @@
+<!-- ===== About: pinned while you scroll; its words dissolve into the red ASCII field as the wall rises over it =====
+     The text stays real text for screen readers and search (the animated copy is aria-hidden). With reduced motion
+     or without script it is a plain section. -->
+<section class="intro" id="about" aria-labelledby="h-about">
+  <div class="intro-pin reg">
+    <svg class="xh tl" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+    <svg class="xh tr" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+    <svg class="xh bl" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+    <svg class="xh br" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11"/></svg>
+    <div class="wrap intro-inner">
+      <div class="intro-text">
+        <h1 id="h-about" class="intro-statement" data-dissolve>A speaker series with a focus on AI governance that aims to make the rules for AI a public conversation.</h1>
+        <p class="intro-mission" data-dissolve>Every other Thursday during term, researchers, lawyers, policymakers and practitioners present one clear argument about how AI should be built, audited and held to account, followed by open questions from the room. Free and open to all, in ISEC 102 and online.</p>
+      </div>
+      <!-- campus photograph (landscape screens 900px and wider), drawn on the canvas by site.js so it can dissolve into white ASCII on scroll.
+           The <img> is its source and stays as the accessible content. data-focus is the point kept in frame -->
+      <figure class="intro-media" id="campus">
+        <div class="frame ph">
+          <canvas aria-hidden="true"></canvas>
+          <img src="assets/campus-exp.webp" width="1500" height="1001" data-focus="54% 45%"
+               alt="A glass building banded with curving silver fins, seen past a long rust-red steel wall on a pedestrian bridge">
+        </div>
+        <figcaption data-dissolve>Organized by HCXAI Lab at Northeastern University</figcaption>
+      </figure>
+    </div>
+    <a class="intro-cue" href="#events"><span>Talks and articles</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></a>
+  </div>
+</section>
