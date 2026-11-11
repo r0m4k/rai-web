@@ -33,7 +33,7 @@ HEAD = """<!doctype html>
 <a class="skip" href="#wall">Skip to talks and posts</a>
 <header class="nav" id="nav">
   <div class="wrap">
-    <a class="wordmark" href="#top" aria-label="Responsible AI, Governance and Policy · back to top">RAI · GOVER<span class="n-mark" aria-hidden="true">N</span>A<span class="n-mark" aria-hidden="true">N</span>CE &amp; POLICY</a>
+    <a class="wordmark" href="#top" aria-label="Responsible AI and Policy · back to top">RESPO<span class="n-mark" aria-hidden="true">N</span>SIBLE AI &amp; POLICY</a>
   </div>
 </header>
 """
